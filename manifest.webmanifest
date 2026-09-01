@@ -1,0 +1,14 @@
+{
+  "name": "Tante Marlene · Inventario",
+  "short_name": "Inventario TM",
+  "description": "Inventario móvil de loza, cubiertos, vasos y copas de Tante Marlene.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f1e9",
+  "theme_color": "#19211c",
+  "lang": "es-CL",
+  "icons": [
+    {"src":"./icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
