@@ -1,31 +1,19 @@
-# Tante Marlene · Inventario PWA
+# Tante Marlene
 
-MVP local-first en HTML/CSS/JavaScript puro.
+Repositorio único para las herramientas internas de Tante Marlene.
 
-## Qué incluye
-- 59 artículos / 719 unidades de base, transcritos desde las cuatro fotos.
-- Loza, cubiertos, vasos de cerveza, vasos/jugos y copas.
-- Cantidades con botones +/− o escritura directa.
-- Guardado de conteos completos con fecha/hora e historial.
-- Alta/edición/eliminación de artículos.
-- Stock mínimo, ubicación, observaciones y marca “por revisar”.
-- Exportar/importar respaldo JSON.
-- IndexedDB: los datos quedan guardados en el dispositivo.
-- Service worker + manifest para uso offline e instalación como PWA.
+## Estructura
+
+- `inventario/` — PWA móvil de inventario, conteos e historial.
+- `delivery/` — calculadora de cobertura y tarifas de delivery. Migración en curso desde el despliegue anterior.
+- `backend/delivery-api/` — backend/proxy de Delivery cuando se independice del hosting anterior.
 
 ## Publicación
-El proyecto está preparado para GitHub Pages desde la rama `main` y la raíz `/`.
 
-URL esperada:
+El sitio está pensado para GitHub Pages desde la rama `main` y la raíz `/`.
 
-`https://bemowl.github.io/tante-marlene-inventario/`
+- Inicio: `https://bemowl.github.io/tante-marlene/`
+- Inventario: `https://bemowl.github.io/tante-marlene/inventario/`
+- Delivery: `https://bemowl.github.io/tante-marlene/delivery/` (cuando termine la migración del API)
 
-## Datos por revisar
-Algunos nombres de la cuarta foto siguen marcados como “por revisar” y se pueden editar directamente desde la aplicación.
-
-## Desarrollo local
-```bash
-python -m http.server 8081
-```
-
-Luego abrir `http://localhost:8081`.
+El inventario usa IndexedDB en el navegador. Al moverlo de la raíz a `/inventario/` dentro del mismo dominio, la base de datos del origen se conserva.

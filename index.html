@@ -3,99 +3,33 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#19211c" />
-  <meta name="description" content="Inventario móvil de Tante Marlene" />
-  <link rel="manifest" href="./manifest.webmanifest" />
-  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="./icons/icon.svg" />
-  <link rel="stylesheet" href="./styles.css" />
-  <title>Tante Marlene · Inventario</title>
+  <meta name="theme-color" content="#6f2437" />
+  <meta name="description" content="Herramientas internas de Tante Marlene" />
+  <title>Tante Marlene</title>
+  <style>
+    :root{--bg:#f3eddf;--card:#fffaf2;--ink:#2a2022;--muted:#766a69;--wine:#6f2437;--green:#263f31;--line:#ded4c7;--shadow:0 16px 45px rgba(63,42,45,.09)}
+    *{box-sizing:border-box}html{background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{margin:0;min-height:100vh}main{width:min(760px,100%);margin:auto;padding:40px 18px 64px}.eyebrow{margin:0;color:var(--wine);font-size:.76rem;font-weight:850;letter-spacing:.16em}.hero h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.5rem,10vw,4.8rem);line-height:.92;margin:9px 0 14px;font-weight:500}.hero p{color:var(--muted);font-size:1rem;line-height:1.55;max-width:560px;margin:0}.tools{display:grid;gap:14px;margin-top:34px}.tool{display:grid;grid-template-columns:58px 1fr auto;align-items:center;gap:14px;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:16px;box-shadow:var(--shadow);min-height:104px}.tool:active{transform:scale(.99)}.icon{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;font-size:1.65rem;background:#eee7dc}.tool.inventory .icon{background:#e2ebe5}.tool.delivery .icon{background:#f1dfe3}.tool strong{display:block;font-family:Georgia,"Times New Roman",serif;font-size:1.35rem;font-weight:600}.tool span{display:block;margin-top:4px;color:var(--muted);font-size:.84rem;line-height:1.4}.arrow{font-size:1.5rem;color:var(--muted)}.soon{opacity:.68;pointer-events:none}.status{display:inline-flex!important;width:max-content;margin-top:8px!important;padding:4px 8px;border-radius:999px;background:#eee5d8;color:#735e54!important;font-size:.68rem!important;font-weight:800}.footer{margin-top:30px;color:var(--muted);font-size:.76rem;text-align:center}@media(min-width:650px){main{padding-top:70px}.tools{grid-template-columns:1fr 1fr}.tool{grid-template-columns:58px 1fr;min-height:170px;align-content:center}.arrow{display:none}}
+  </style>
 </head>
 <body>
-  <header class="app-header">
-    <div>
-      <p class="eyebrow">TANTE MARLENE</p>
-      <h1>Inventario</h1>
+<main>
+  <section class="hero">
+    <p class="eyebrow">HERRAMIENTAS INTERNAS</p>
+    <h1>Tante Marlene</h1>
+    <p>Un solo lugar para las herramientas del restaurante. Empezamos por inventario y delivery, y podemos seguir agregando módulos sin cambiar de dirección.</p>
+  </section>
+  <section class="tools">
+    <a class="tool inventory" href="./inventario/">
+      <div class="icon">🍽️</div><div><strong>Inventario</strong><span>Loza, cubiertos, vasos y copas. Conteos e historial.</span></div><div class="arrow">›</div>
+    </a>
+    <div class="tool delivery soon">
+      <div class="icon">🚲</div><div><strong>Delivery</strong><span>Cobertura y tarifas de reparto en bicicleta.</span><span class="status">Migrando al repo</span></div><div class="arrow">›</div>
     </div>
-    <button id="menuBtn" class="icon-btn" aria-label="Abrir herramientas">⋮</button>
-  </header>
-
-  <main>
-    <section class="summary-card" aria-label="Resumen">
-      <div>
-        <span class="summary-label">Último conteo</span>
-        <strong id="lastCount">—</strong>
-      </div>
-      <div class="stats">
-        <div><strong id="articleCount">0</strong><span>artículos</span></div>
-        <div><strong id="unitCount">0</strong><span>unidades</span></div>
-        <div><strong id="reviewCount">0</strong><span>por revisar</span></div>
-      </div>
-    </section>
-
-    <section class="search-wrap">
-      <label class="sr-only" for="search">Buscar artículo</label>
-      <input id="search" type="search" placeholder="🔎  Buscar artículo…" autocomplete="off" />
-    </section>
-
-    <nav id="categoryChips" class="chips" aria-label="Categorías"></nav>
-
-    <section id="inventory" class="inventory" aria-live="polite"></section>
-  </main>
-
-  <div class="save-bar">
-    <div id="changeHint" class="change-hint">Sin cambios pendientes</div>
-    <button id="saveCountBtn" class="primary-btn">Guardar conteo</button>
-  </div>
-
-  <dialog id="toolsDialog" class="sheet-dialog">
-    <form method="dialog" class="sheet-head">
-      <strong>Herramientas</strong>
-      <button class="icon-btn" value="cancel" aria-label="Cerrar">×</button>
-    </form>
-    <div class="sheet-body">
-      <button id="historyBtn" class="tool-row" type="button">Historial de conteos <span>›</span></button>
-      <button id="addItemBtn" class="tool-row" type="button">Añadir artículo <span>＋</span></button>
-      <button id="exportBtn" class="tool-row" type="button">Exportar respaldo <span>⇩</span></button>
-      <label class="tool-row file-row">Importar respaldo <span>⇧</span><input id="importInput" type="file" accept="application/json" /></label>
-      <button id="installBtn" class="tool-row" type="button" hidden>Instalar app <span>⇩</span></button>
-    </div>
-  </dialog>
-
-  <dialog id="itemDialog" class="sheet-dialog">
-    <form id="itemForm" class="sheet-form">
-      <div class="sheet-head">
-        <strong id="itemDialogTitle">Editar artículo</strong>
-        <button id="closeItemBtn" class="icon-btn" type="button" aria-label="Cerrar">×</button>
-      </div>
-      <div class="sheet-body form-grid">
-        <input id="itemId" type="hidden" />
-        <label>Nombre<input id="itemName" required maxlength="80" /></label>
-        <label>Categoría<select id="itemCategory" required></select></label>
-        <label>Subcategoría<input id="itemSubcategory" maxlength="50" /></label>
-        <label>Cantidad actual<input id="itemQty" type="number" min="0" step="1" required /></label>
-        <label>Stock mínimo<input id="itemMin" type="number" min="0" step="1" /></label>
-        <label>Ubicación<input id="itemLocation" maxlength="80" /></label>
-        <label class="wide">Observaciones<textarea id="itemNotes" rows="3" maxlength="300"></textarea></label>
-        <label class="check wide"><input id="itemReview" type="checkbox" /> Marcar como “por revisar”</label>
-        <button class="primary-btn wide" type="submit">Guardar artículo</button>
-        <button id="deleteItemBtn" class="danger-btn wide" type="button" hidden>Eliminar artículo</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="historyDialog" class="sheet-dialog history-dialog">
-    <div class="sheet-head">
-      <strong>Historial</strong>
-      <button id="closeHistoryBtn" class="icon-btn" type="button" aria-label="Cerrar">×</button>
-    </div>
-    <div id="historyList" class="sheet-body history-list"></div>
-  </dialog>
-
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-
-  <script src="./data.js"></script>
-  <script src="./db.js"></script>
-  <script src="./app.js"></script>
+  </section>
+  <p class="footer">Tante Marlene · herramientas internas</p>
+</main>
+<script>
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+</script>
 </body>
 </html>
